@@ -47,10 +47,10 @@
 			<artifactId>liquibase-core</artifactId>
 		</dependency>
 		<dependency>
-		<groupId>org.liquibase.ext</groupId>
-		<artifactId>liquibase-mongodb</artifactId>
-		<version>4.29.0</version>
-	    </dependency>
+			<groupId>org.liquibase.ext</groupId>
+			<artifactId>liquibase-mongodb</artifactId>
+			<version>4.29.2</version>
+		</dependency>
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
