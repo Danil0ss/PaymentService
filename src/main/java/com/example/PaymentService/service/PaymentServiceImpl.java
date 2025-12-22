@@ -9,6 +9,7 @@ import com.example.PaymentService.entity.PaymentStatus;
 import com.example.PaymentService.mapper.PaymentMapper;
 import com.example.PaymentService.repository.PaymentRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -25,15 +26,15 @@ public class PaymentServiceImpl implements PaymentService {
     private final PaymentRepository paymentRepository;
     private final PaymentMapper paymentMapper;
     private final KafkaTemplate<String, Object> kafkaTemplate;
-    private static final String URL = "https://www.random.org/integers/?num=1&min=1&max=100&col=1&base=10&format=plain&rnd=new";
-
+    @Value("${services.random-org.url:https://www.random.org/integers/?num=1&min=1&max=100&col=1&base=10&format=plain&rnd=new}")
+    private String randomOrgUrl;
 
     @Override
     public PaymentResponseDTO createPayment(PaymentRequestDTO requestDTO) {
         Payment payment = paymentMapper.toEntity(requestDTO);
         payment.setTimestamp(Instant.now());
         try {
-            String response = restTemplate.getForObject(URL, String.class);
+            String response = restTemplate.getForObject(randomOrgUrl, String.class);
             int randomNumber = Integer.parseInt(response.trim());
             if (randomNumber % 2 == 0) {
                 payment.setStatus(PaymentStatus.SUCCESS);
