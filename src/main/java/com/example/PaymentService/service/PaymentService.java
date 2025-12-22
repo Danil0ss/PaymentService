@@ -21,4 +21,6 @@ public interface PaymentService {
 
 
     BigDecimal getTotalSumAll(Instant from, Instant to);
+
+    public void debugData();
 }
