@@ -6,6 +6,7 @@ import liquibase.database.DatabaseFactory;
 import liquibase.resource.ClassLoaderResourceAccessor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
 import jakarta.annotation.PostConstruct;
@@ -15,9 +16,12 @@ public class LiquibaseRunner {
 
     private static final Logger log = LoggerFactory.getLogger(LiquibaseRunner.class);
 
+    @Value("${spring.data.mongodb.uri}")
+    private String url;
+
     @PostConstruct
     public void runLiquibase() {
-        String url = "mongodb://localhost:27017/payment_db";
+
         String changeLogFile = "db/changelog/db.changelog-master.xml";
 
         try {
